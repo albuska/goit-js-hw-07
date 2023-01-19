@@ -1,4 +1,63 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-console.log(galleryItems);
+
+const containerRef = document.querySelector('.gallery');
+
+containerRef.addEventListener('click', GetOriginalUrl); 
+
+function GetOriginalUrl(event) {
+  event.preventDefault();
+  // if(event.target.nodeName !== "IMG") {
+  //   return; 
+  // }
+if(!event.target.classList.contains('gallery__image')) {
+  return;
+}
+
+openModalWindow(event); 
+}
+
+const createCardMarkup = createItemsList(galleryItems); 
+console.log(createCardMarkup); 
+
+containerRef.innerHTML = createCardMarkup;
+
+function createItemsList(items) {
+return items.map(item => 
+`<a class="gallery__link" href="${item.original}">
+<img
+  class="gallery__image"
+  src="${item.preview}"
+  data-source="${item.original}"
+  alt="${item.description}"
+/>
+</a>`).join('');
+}
+
+function openModalWindow(event) {
+  const originalUrlImage = event.target.dataset.source; 
+
+const instance = basicLightbox.create(`
+    // <img src="${originalUrlImage}">
+`)
+
+instance.show() 
+}
+
+// 2 варіант 
+// function openModalWindow(event) {
+//   const originalUrlImage = event.target.dataset.source; 
+
+//   const instance = basicLightbox.create(`
+//   <div class="modal">
+//   <img
+//   src="${originalUrlImage}"
+// />  
+//   </div>
+// `)
+// instance.show();
+// }
+
+
+
