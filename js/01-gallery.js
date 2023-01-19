@@ -39,7 +39,7 @@ function openModalWindow(event) {
   const originalUrlImage = event.target.dataset.source; 
 
 const instance = basicLightbox.create(`
-    // <img src="${originalUrlImage}">
+    // <img src="${originalUrlImage}" width="800" height="600">
 `)
 
 instance.show() 
