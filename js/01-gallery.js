@@ -4,9 +4,9 @@ import { galleryItems } from './gallery-items.js';
 
 const containerRef = document.querySelector('.gallery');
 
-containerRef.addEventListener('click', GetOriginalUrl); 
+containerRef.addEventListener('click', getOriginalUrl); 
 
-function GetOriginalUrl(event) {
+function getOriginalUrl(event) {
   event.preventDefault();
   // if(event.target.nodeName !== "IMG") {
   //   return; 
@@ -14,7 +14,6 @@ function GetOriginalUrl(event) {
 if(!event.target.classList.contains('gallery__image')) {
   return;
 }
-
 openModalWindow(event); 
 }
 
@@ -39,11 +38,22 @@ function openModalWindow(event) {
   const originalUrlImage = event.target.dataset.source; 
 
 const instance = basicLightbox.create(`
-    // <img src="${originalUrlImage}" width="800" height="600">
-`)
+    <img src="${originalUrlImage}" width="800" height="600">
+`, {
+  onShow: (instance) => document.body.addEventListener('keydown', onEscKeyPress),
+  onClose: (instance) => document.body.removeEventListener('keydown', onEscKeyPress),
+})
 
 instance.show() 
+
+function onEscKeyPress(event) {
+if(event.code === "Escape") {
+ instance.close();     
 }
+}
+}
+
+
 
 // 2 варіант 
 // function openModalWindow(event) {
@@ -58,6 +68,8 @@ instance.show()
 // `)
 // instance.show();
 // }
+
+
 
 
 
